@@ -14,9 +14,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Cacheable(value="user",key = "#root.methodName")
+    @Cacheable(value = "user", key = "#root.methodName")
     public List<User> getAllUser() {
-        List<User> list=userDao.getAllUser();
+        List<User> list = userDao.getAllUser();
         return list;
+    }
+
+    @Override
+    public User userLogin(User user) {
+        user = userDao.userLogin(user.getUsername(), user.getPassword());
+        return user;
     }
 }

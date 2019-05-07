@@ -2,23 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>首页</title>
     <script src="js/jquery-3.4.0.js" type="text/javascript"></script>
+    <script src="js/vue.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
+            $("#btLogin").click(function () {
+                window.location.href="login";
+            });
             var html = $.ajax({
                 type: "GET",
                 url: "userInfo",
                 async: true,
-                success: function(data){
-                    $("#myDiv").html('<h2>'+JSON.stringify(data)+'</h2>');
+                success: function (data) {
+                    //$("#myDiv").html('<h2>'+JSON.stringify(data)+'</h2>');
+                    new Vue({
+                        el: '#myDiv',
+                        data: {
+                            sites: data
+                        }
+                    });
                 }
             });
         });
     </script>
 </head>
 <body>
-<p th:text="${welcome}"></p>
-<div id="myDiv"></div>
+<p th:text="${welcome}">[]</p>
+<div id="myDiv">
+    <ol v-for="site in sites">
+        <li> {{ site.username }}</li>
+        <li> {{ site.email }}</li>
+    </ol>
+</div>
+<button id="btLogin">登录</button>
 </body>
 </html>
