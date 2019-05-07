@@ -69,13 +69,38 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--部署成war包时开启↓↓↓↓-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!--部署成war包时开启↑↑↑↑-->
     </dependencies>
 
+    <!--配置打包类型为war文件-->
+    <packaging>war</packaging>
+
     <build>
+        <!--项目打包成的包的名称，应该与application.properties的server.context-path=/bx_web保持一致-->
+        <finalName>bx_web</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--项目最终需要进行打包成war，所以还需要设置一个 maven 的 war 文件的打包插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>bx_web</warName>
+                </configuration>
             </plugin>
         </plugins>
     </build>
