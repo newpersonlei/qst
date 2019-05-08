@@ -21,4 +21,9 @@ public class IndexController {
     public String login(Model model) {
         return "/login";
     }
+
+    @RequestMapping("register")
+    public String retister(Model model) {
+        return "/register";
+    }
 }

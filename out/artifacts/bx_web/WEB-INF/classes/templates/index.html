@@ -10,6 +10,9 @@
             $("#btLogin").click(function () {
                 window.location.href="login";
             });
+            $("#btRegister").click(function () {
+                window.location.href="register";
+            });
             var html = $.ajax({
                 type: "GET",
                 url: "userInfo",
@@ -36,5 +39,6 @@
     </ol>
 </div>
 <button id="btLogin">登录</button>
+<button id="btRegister">注册</button>
 </body>
 </html>

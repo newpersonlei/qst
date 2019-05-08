@@ -69,11 +69,11 @@ public class User implements Serializable{
         this.regTime = regTime;
     }
 
-    public String getRegIP() {
+    public String getRegIp() {
         return regIp;
     }
 
-    public void setRegIP(String regIp) {
+    public void setRegIp(String regIp) {
         this.regIp = regIp;
     }
 }

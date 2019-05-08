@@ -11,4 +11,6 @@ public interface UserDao {
     List<User> getAllUser();
 
     User userLogin(String username,String password);
+
+    void addUser(User user);
 }

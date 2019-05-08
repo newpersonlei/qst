@@ -25,4 +25,16 @@ public class UserServiceImpl implements UserService {
         user = userDao.userLogin(user.getUsername(), user.getPassword());
         return user;
     }
+
+    @Override
+    public int addUser(User user) {
+        int res = 0;
+        try {
+            userDao.addUser(user);
+            res = user.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }

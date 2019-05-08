@@ -12,11 +12,20 @@
         <id column="regIp" property="regIp"></id>
     </resultMap>
     <select id="getAllUser" resultMap="userList">
-        SELECT * FROM user
+        SELECT *
+        FROM user
     </select>
 
     <select id="userLogin" resultType="com.qst.bx_web.pojo.User">
-        SELECT * FROM user where username=#{username} and password=#{password}
+        SELECT *
+        FROM user
+        where username = #{username}
+          and `password` = #{password}
     </select>
+
+    <insert id="addUser" parameterType="com.qst.bx_web.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(email, `password`, username, `role`, `status`, regTime, regIp)
+        values (#{email}, #{password}, #{username}, #{role}, #{status}, #{regTime}, #{regIp})
+    </insert>
 </mapper>
 

@@ -2,12 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户登录</title>
-    <script src="js/jquery-3.4.0.js" type="text/javascript"></script>
-    <script src="js/vue.min.js" type="text/javascript"></script>
+    <title>用户注册</title>
 </head>
 <body>
-<form id="login.action" name="login.action" action="userLogin" method="post">
+<form id="login.action" name="login.action" action="addUser" method="post">
     <div class="infos" style="text-align:center;">
         <table class="field" style="text-align:center;">
             <tr>
@@ -16,7 +14,7 @@
             <tr style="text-align:center ;margin-left:300px;">
                 <td class="field" style="color:black;text-align: center">用 户 名：</td>
                 <td>
-                    <input type="text" name="username"  th:value="${username}" id="username" class="text" required="true"/>
+                    <input type="text" name="username" value="" id="username" class="text" required="true"/>
                 </td>
             </tr>
             <tr>
@@ -26,15 +24,21 @@
                 </td>
             </tr>
             <tr>
+                <td class="field">电子邮件：</td>
+                <td>
+                    <input type="email" name="email" id="email" class="text" required="true"/>
+                </td>
+            </tr>
+            <tr>
                 <td class="field"></td>
                 <td>
-                    <input type="submit" id="User_login_action_0" value="立即登录"/>
+                    <input type="submit" id="User_register_action_0" value="立即注册"/>
                 </td>
             </tr>
         </table>
     </div>
 </form>
 
-<div id="result"><p th:text="${session.error}">[]</p></div>
+<div id="result"><p th:text="${error}">[]</p></div>
 </body>
 </html>
