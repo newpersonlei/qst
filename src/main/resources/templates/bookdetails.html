@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base::layout(~{::title},~{::#content_div})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base::layout(~{::title},_,~{::#content_div})}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图书详情</title>
@@ -8,16 +8,15 @@
 <body>
 <div id="content_div">
     <div class="book_view">
-        <h1 class="b_title" th:text="${book.title}"></h1>
+        <h1 class="b_title" th:text="${'丛书名：'+book.title}"></h1>
         <div class="b_exa">
-            <span class="book_group" th:text="${'丛书名：'+book.title}"></span>
             <span class="book_status">正在阅读（150 人），已经阅读（4521 人） <span><a href="#">放入书架</a></span> <a href="#">什么是书架？</a></span>
         </div>
 
         <!--book basic start-->
         <dl class="put_book">
             <dt>
-                <img th:src="${book.pic3}" th:alt="${book.title}" />
+                <img th:src="${book.pic2}" th:alt="${book.title}" />
                 <div class="chakan"><img src="Images/zoom.gif" /> <a class="gray878787a" href="#" name="bigpicture">点击查看大图</a></div>
             </dt>
             <dd>

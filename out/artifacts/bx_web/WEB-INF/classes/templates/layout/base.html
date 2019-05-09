@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" th:fragment="layout(title,content)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" th:fragment="layout(title,left,content)">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title th:replace="${title}">图书列表页</title>
+    <title th:replace="${title}">无</title>
     <link href="CSS/global.css" rel="stylesheet" type="text/css"/>
+    <link href="CSS/member.css" rel="stylesheet" type="text/css" />
     <link href="CSS/channel.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/global.js"></script>
     <script src="js/jquery-3.4.0.js" type="text/javascript"></script>
     <script src="js/vue.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            $("#btLogin").click(function () {
-                window.location.href = "login";
-            });
-            $("#btRegister").click(function () {
-                window.location.href = "register";
-            });
             var html = $.ajax({
                 type: "GET",
                 url: "categoryInfo",
@@ -36,17 +31,14 @@
 
 <body>
 <div id="top">
-    <div class="status">您好，欢迎来<b th:text="${session.user!=null?session.user.username:''}"></b>到网上书店^_^ <span><a
-            href="login">【登录】</a><a
-            href="register">【免费注册】</a></span></div>
+    <div class="status">您好，欢迎来<b th:text="${session.user!=null?session.user.username:''}"></b>到网上书店^_^</div>
     <div class="member">
         <div id="nav">
             <ul id="mainnav">
-                <li class="current"><a href="#">首页</a></li>
-                <li><a href="#">登录</a></li>
-                <li><a href="#">注册</a></li>
-                <li><a href="#">商讯</a></li>
-                <li><a href="#">购物流程</a></li>
+                <li class="current"><a href="index">首页</a></li>
+                <li><a href="login">用户登录</a></li>
+                <li><a href="register" style="color: red">免费注册</a></li>
+                <li><a href="basket">购物车</a></li>
                 <li><a href="#">在线客服</a></li>
                 <li><a href="#">积分兑换</a></li>
                 <li><a href="#">书籍求购</a></li>
@@ -63,11 +55,11 @@
 
 <div id="container">
     <!--left content-->
-    <div id="intro">
+    <div id="intro" th:replace="${left}">
         <div class="child_menu" id="categoryListDiv">
             <h2 class="white">图书分类</h2>
-            <ul v-for="site in sites">
-                <li><a v-bind:href="['booklistInfo?cid='+site.cid]">{{ site.cname2 }}</a></li>
+            <ul>
+                <li v-for="site in sites"><a v-bind:href="['booklistInfo?cid='+site.cid]">{{ site.cname2 }}</a></li>
             </ul>
         </div>
 
