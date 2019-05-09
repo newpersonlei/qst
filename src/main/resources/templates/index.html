@@ -1,47 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base::layout(~{::title},~{::#content_div})}">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>首页</title>
-    <script src="js/jquery-3.4.0.js" type="text/javascript"></script>
-    <script src="js/vue.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#btLogin").click(function () {
-                window.location.href = "login";
-            });
-            $("#btRegister").click(function () {
-                window.location.href = "register";
-            });
-            var html = $.ajax({
-                type: "GET",
-                url: "categoryInfo",
-                async: true,
-                success: function (data) {
-                    //$("#myDiv").html('<h2>'+JSON.stringify(data)+'</h2>');
-                    new Vue({
-                        el: '#myDiv',
-                        data: {
-                            sites: data
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </head>
+
 <body>
-<p th:text="${welcome}">[]</p>
-<div id="myDiv">
-    <table>
-        <tr v-for="site in sites">
-            <td>{{ site.cid }}</td>
-            <td>{{ site.cname }}</td>
-            <td><a v-bind:href="['booklistInfo?cid='+site.cid]">{{ site.cname2 }}</a></td>
-        </tr>
-    </table>
+<div id="content_div">
+这里是首页
 </div>
-<button id="btLogin">登录</button>
-<button id="btRegister">注册</button>
 </body>
 </html>

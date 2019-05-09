@@ -7,6 +7,7 @@ import com.qst.bx_web.service.BookService;
 import com.qst.bx_web.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,9 +38,9 @@ public class BookController {
         String strPageNo = request.getParameter("pageNo");
         String strPageSize = request.getParameter("pageSize");
 
-        int cid = (strCid == "" || strCid == null) ? 0 : Integer.parseInt(strCid);
-        int pageNo = (strPageNo == "" || strPageNo == null) ? 1 : Integer.parseInt(strPageNo);
-        int pageSize = (strPageSize == "" || strPageSize == null) ? 10 : Integer.parseInt(strPageSize);
+        int cid = ("".equals(strCid) || strCid == null) ? 0 : Integer.parseInt(strCid);
+        int pageNo = ("".equals(strPageNo) || strPageNo == null) ? 1 : Integer.parseInt(strPageNo);
+        int pageSize = ("".equals(strPageSize) || strPageSize == null) ? 10 : Integer.parseInt(strPageSize);
 
         if (session.getAttribute("categorylist") == null) {
             List<Category> categoryList = categoryService.getAllCategorys();
@@ -49,6 +50,30 @@ public class BookController {
         List<Book> list = bookService.getAllBooks(cid, pageNo, pageSize);
         session.setAttribute("booklist", list);
         mv.setViewName("booklist");
+        return mv;
+    }
+
+    //bookdetailsInfo
+    @RequestMapping("bookdetailsInfo")
+    public ModelAndView bookdetailsInfo(Model model, User user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        String strBid = request.getParameter("bid");
+        int bid = ("".equals(strBid) || strBid == null) ? 0 : Integer.parseInt(strBid);
+        Book book = bookService.getBookById(bid);
+
+//        model.addAttribute("author", book.getAuthor());
+//        model.addAttribute("cid", book.getCategory().getCid());
+//        model.addAttribute("bookid", book.getBookid());
+//        model.addAttribute("cname2", book.getCategory().getCname2());
+//        model.addAttribute("title", book.getTitle());
+//        model.addAttribute("publishdate", book.getPublishdate());
+//        model.addAttribute("unitprice", book.getUnitprice());
+//        model.addAttribute("press", book.getPress());
+//        model.addAttribute("pic1", book.getPic1());
+//        model.addAttribute("pic2", book.getPic2());
+//        model.addAttribute("pic3", book.getPic3());
+        model.addAttribute("book",book);
+        mv.setViewName("bookdetails");
         return mv;
     }
 }

@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base::layout(~{::title},~{::#content_div})}">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>用户注册</title>
 </head>
-<body>
-<form id="login.action" name="login.action" action="addUser" method="post">
-    <div class="infos" style="text-align:center;">
-        <table class="field" style="text-align:center;">
-            <tr>
-                <td colspan="2" style="text-align:center; color:red"></td>
-            </tr>
-            <tr style="text-align:center ;margin-left:300px;">
-                <td class="field" style="color:black;text-align: center">用 户 名：</td>
-                <td>
-                    <input type="text" name="username" value="" id="username" class="text" required="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="field">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
-                <td>
-                    <input type="password" name="password" id="password" class="text" required="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="field">电子邮件：</td>
-                <td>
-                    <input type="email" name="email" id="email" class="text" required="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="field"></td>
-                <td>
-                    <input type="submit" id="User_register_action_0" value="立即注册"/>
-                </td>
-            </tr>
-        </table>
-    </div>
-</form>
 
-<div id="result"><p th:text="${error}">[]</p></div>
+<body>
+<div id="content_div">
+    <form id="login.action" name="login.action" action="addUser" method="post">
+        <div class="infos" style="text-align:center;">
+            <table class="field" style="text-align:center;">
+                <tr>
+                    <td colspan="2" style="text-align:center; color:red"></td>
+                </tr>
+                <tr style="text-align:center ;margin-left:300px;">
+                    <td class="field" style="color:black;text-align: center">用 户 名：</td>
+                    <td>
+                        <input type="text" name="username" value="" id="username" class="text" required="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
+                    <td>
+                        <input type="password" name="password" id="password" class="text" required="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field">电子邮件：</td>
+                    <td>
+                        <input type="email" name="email" id="email" class="text" required="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field"></td>
+                    <td>
+                        <input type="submit" id="User_register_action_0" value="立即注册"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <div id="result"><p th:text="${error}">[]</p></div>
+</div>
 </body>
 </html>
+
+

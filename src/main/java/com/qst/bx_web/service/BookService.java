@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface BookService {
     List<Book> getAllBooks(int cid,int pageNo,int pageSize);
+
+    Book getBookById(int bid);
+
 }

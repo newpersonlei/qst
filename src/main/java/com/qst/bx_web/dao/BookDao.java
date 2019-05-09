@@ -9,4 +9,6 @@ import java.util.Map;
 @Mapper
 public interface BookDao {
     List<Book> getAllBooks(Map<String,Integer> map);
+
+    Book getBookById(int bid);
 }

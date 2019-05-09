@@ -25,5 +25,11 @@
         LIMIT ${(pageNo-1)*pageSize},${pageSize}
     </select>
 
+    <select id="getBookById" resultMap="bookList">
+        SELECT bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice
+        FROM bx_books bb join bx_category bc on bb.cid=bc.cid
+        where bookid = #{bid}
+    </select>
+
 </mapper>
 

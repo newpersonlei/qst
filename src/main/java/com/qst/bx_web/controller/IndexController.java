@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -30,5 +31,10 @@ public class IndexController {
     @RequestMapping("booklist")
     public String booklist(Model model) {
         return "/booklist";
+    }
+
+    @RequestMapping("bookdetails")
+    public String bookdetails(Model model) {
+        return "/bookdetails";
     }
 }

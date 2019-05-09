@@ -1,147 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base::layout(~{::title},~{:: #content_div})}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>图书列表页</title>
-    <link href="CSS/global.css" rel="stylesheet" type="text/css"/>
-    <link href="CSS/channel.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/global.js"></script>
-    <script src="js/jquery-3.4.0.js" type="text/javascript"></script>
-    <script src="js/vue.min.js" type="text/javascript"></script>
+    <title>图书列表</title>
 </head>
 
 <body>
-<div id="top">
-    <div class="status">您好，欢迎来<b th:text="${session.user!=null?session.user.username:''}"></b>到网上书店^_^ <span><a
-            href="login">【登录】</a><a
-            href="register">【免费注册】</a></span></div>
-    <div class="member">
-        <ul>
-            <li><a href="#"><img src="Images/payVIP.gif" height="18" alt="开通VIP"/></a></li>
-            <li><a href="#"><img src="Images/payCoin.gif" height="18" alt="学币中心"/></a></li>
-        </ul>
+<div id="content_div">
+    <div th:each="b : ${session.booklist}"><!-- 其中m是个临时变量，像for(User u : userList)那样中的u-->
+        <dl class="list_area">
+            <dt><a th:href="@{'bookdetailsInfo?bid='+${b.bookid}}"><img th:src="${b.pic2}" width="100" height="100"
+                                                                        onload="set_pic_size(this,100,100);" th:alt="${b.title}"/></a></dt>
+            <dd>
+                <h2 class="b_title"><a th:href="@{'bookdetailsInfo?bid='+${b.bookid}}" th:text="${b.title}"></a></h2>
+                <!--将书籍的id 写入span-->
+                <div class="b_score">顾客评分：<span id="book_id_15">5</span></div>
+                <div class="b_property" th:text="${'作者：'+b.author}"></div>
+                <div class="b_property" th:text="${'出版社：'+b.press}"></div>
+                <div class="b_property" th:text="${'出版时间：'+b.publishdate}"></div>
+                <h4 class="b_intro" th:text="${b.press}">...</h4>
+                <div class="b_buy">
+                    <span class="gray del" th:text="${'单价：'+b.unitprice+' | '}"></span>　折扣：75折
+                    <span th:text="${'--> 折后价：'+b.unitprice*0.75}"></span>　
+                    <img src="Images/btn_goumai.gif" onmouseover="this.src='Images/btn_goumai_click.gif'"/>
+                    <img src="Images/btn_zancun.gif" onmouseover="this.src='Images/btn_zancun_click.gif'"/>
+                </div>
+            </dd>
+        </dl>
     </div>
 </div>
-
-<div id="header">
-    <div id="nav">
-        <ul id="mainnav">
-            <li class="current"><a href="#">首页</a></li>
-            <li><a href="#">登录</a></li>
-            <li><a href="#">注册</a></li>
-            <li><a href="#">商讯</a></li>
-            <li><a href="#">购物流程</a></li>
-            <li><a href="#">在线客服</a></li>
-            <li><a href="#">积分兑换</a></li>
-            <li><a href="#">书籍求购</a></li>
-            <li><a href="#">帮助</a></li>
-        </ul>
-    </div>
-</div>
-
-<div id="a_b_04"><img src="Images/a_b_04.jpg" alt=""/></div>
-
-<div id="breadcrumb">您现在的位置： 首页 > 情感 > <a href="#" class="red">言情（1890种）</a></div>
-
-<div id="container">
-    <!--left content-->
-    <div id="intro">
-        <div class="child_menu">
-            <h2 class="white">图书分类</h2>
-            <ul th:each="c : ${session.categorylist}">
-                <li><a th:href="@{'booklistInfo?cid='+${c.cid}}" th:text="${c.cname2}"></a></li>
-            </ul>
-        </div>
-
-        <div class="history">
-            <h2>最近的浏览记录</h2>
-            <ul>
-                <li><span>&middot;</span><a href="#">暮光之城-月食</a></li>
-                <li><span>&middot;</span><a href="#">家小团圆（张爱玲...</a></li>
-                <li><span>&middot;</span><a href="#">完全图解哇野外求...</a></li>
-                <li><span>&middot;</span><a href="#">近代女性服饰演变...</a></li>
-                <li><span>&middot;</span><a href="#">【6折】碧血剑</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="main">
-        <div class="list_asc">
-            <!--choice order type-->
-            <div class="type_choice f_left">
-                排序方式
-                <select name="list_type">
-                    <option>按销量 排序</option>
-                </select>
-            </div>
-            <!--page no-->
-            <div class="turn_area f_right">
-                <span id="turn_pre"><<</span>
-                <span id="turn_page">第一页</span>
-                <span id="turn_next">>></span>
-            </div>
-
-        </div>
-        <div th:each="b : ${session.booklist}"><!-- 其中m是个临时变量，像for(User u : userList)那样中的u-->
-            <dl class="list_area">
-                <dt><a href="#"><img th:src="${b.pic2}" width="100" height="100"
-                                     onload="set_pic_size(this,100,100);" alt="暮光之城"/></a></dt>
-                <dd>
-                    <h2 class="b_title"><a href="#" th:text="${b.title}"></a></h2>
-                    <!--将书籍的id 写入span-->
-                    <div class="b_score">顾客评分：<span id="book_id_15">5</span></div>
-                    <div class="b_property" th:text="${'作者：'+b.author+'<br/>出版时间：'+b.publishdate}"></div>
-                    <h4 class="b_intro" th:text="${b.press}">...</h4>
-                    <div class="b_buy">
-                        <span class="gray del" th:text="${b.unitprice}"></span>　折扣：75折　
-                        <img src="Images/btn_goumai.gif" onmouseover="this.src='Images/btn_goumai_click.gif'"/>
-                        <img src="Images/btn_zancun.gif" onmouseover="this.src='Images/btn_zancun_click.gif'"/>
-                    </div>
-                </dd>
-            </dl>
-        </div>
-        <div class="pages">
-            <a href="#" title="前一页" class="first"><<</a>
-            <a href="#" title="" class="current">1</a>
-            <a href="#" title="">2</a>
-            <a href="#" title="">3</a>
-            <a href="#" title="">4</a>
-            <a href="#" title="">5</a>
-            <a href="javascript:void(0)" class="more">...</a>
-            <a href="#" title="">106</a>
-            <a href="#" title="">107</a>
-            <a href="#" title="">108</a>
-            <a href="#" title="">109</a>
-            <a href="#" title="">110</a>
-            <a href="#" title="后一页" class="end">>></a>
-        </div>
-
-    </div>
-
-</div>
-
-
-<div id="footer">
-    <!--contac us-->
-    <div class="telephone">
-        <strong>热线</strong> 021-61508168　<strong>传真</strong> 021-61508168-8020　 <br/>
-        <strong>Q Q</strong>375013071  13483528    562655482  1143735195（技术)<br/>
-        <strong>MSN</strong> hjservice@hotmail.com   <strong>信箱</strong> shop@hjenglish.com<br/>
-        <strong>帮助</strong> <a href="/help/help.aspx" target="_blank">银行汇款帐户</a> <a href="/help/help.aspx#help_post"
-                                                                                    target="_blank">邮局汇款地址</a> <a
-            href="/help/help.aspx#help_ship" target="_blank">送货方式及费用</a> <a
-            href="http://www.hjenglish.com/down/faq_2.htm" target="_blank">如何进行下载</a>
-    </div>
-    <!---->
-    <div class="imp_link">
-        <img src="Images/alipay.gif" alt="支付宝支付"/><img src="Images/online_pay.gif" alt="在线支付"/><br/>
-        <a href="http://www.hjenglish.com/about/aboutus.htm" target="_blank">网站介绍</a>　<a
-            href="http://www.hjenglish.com/about/partner.htm" target="_blank">合作伙伴</a>　<a href="#"
-                                                                                          target="_blank">网站地图</a>　<a
-            href="#" target="_blank">联系我们</a><br/>
-        <a href="#" target="_blank">增值电信业务经营许可证沪B2-20040503</a></div>
-</div>
-
 </body>
 </html>
 

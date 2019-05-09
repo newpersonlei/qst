@@ -21,7 +21,13 @@ public class BookServiceImpl implements BookService {
         map.put("cid", cid);
         map.put("pageNo", pageNo);
         map.put("pageSize", pageSize);
-        System.out.println(map.size()+":::::"+map.get("pageSize"));
+        System.out.println(map.size() + ":::::" + map.get("pageSize"));
         return bookDao.getAllBooks(map);
+    }
+
+    @Override
+    public Book getBookById(int bid) {
+        Book book = bookDao.getBookById(bid);
+        return book;
     }
 }

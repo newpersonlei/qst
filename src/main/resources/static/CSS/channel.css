@@ -10,7 +10,7 @@
 	/*子目录*/
 	.child_menu{ background:url(../Images/child_menu_t.gif) repeat-x 0 28px;}
 	.child_menu h2{ background:url(../Images/child_menu_h.gif) no-repeat; text-align:center; font:600 14px/28px Tahoma;}
-	.child_menu ul{ background:url(../Images/child_menu_b.gif) repeat-x 0 bottom; border:1px solid #72b4e6; padding:15px 0 20px 20px;}
+	.child_menu ul{ background:url(../Images/child_menu_b.gif) repeat-x 0 bottom; border:1px solid #72b4e6; padding:10px 0 10px 10px;}
 	.child_menu li{ font:14px/28px Arial; background:url(../Images/arrow_2.gif) no-repeat 0 13px; padding-left:10px;}
 	.child_menu li a{ text-decoration:none;}
 	.child_menu li.more{ text-align:right; background:none; padding-right:20px;}
