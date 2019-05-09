@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
@@ -8,14 +8,14 @@
     <script type="text/javascript">
         $(function () {
             $("#btLogin").click(function () {
-                window.location.href="login";
+                window.location.href = "login";
             });
             $("#btRegister").click(function () {
-                window.location.href="register";
+                window.location.href = "register";
             });
             var html = $.ajax({
                 type: "GET",
-                url: "userInfo",
+                url: "categoryInfo",
                 async: true,
                 success: function (data) {
                     //$("#myDiv").html('<h2>'+JSON.stringify(data)+'</h2>');
@@ -33,10 +33,13 @@
 <body>
 <p th:text="${welcome}">[]</p>
 <div id="myDiv">
-    <ol v-for="site in sites">
-        <li> {{ site.username }}</li>
-        <li> {{ site.email }}</li>
-    </ol>
+    <table>
+        <tr v-for="site in sites">
+            <td>{{ site.cid }}</td>
+            <td>{{ site.cname }}</td>
+            <td><a v-bind:href="['booklistInfo?cid='+site.cid]">{{ site.cname2 }}</a></td>
+        </tr>
+    </table>
 </div>
 <button id="btLogin">登录</button>
 <button id="btRegister">注册</button>

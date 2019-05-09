@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.bx_web.dao.BookDao">
+    <resultMap id="bookList" type="com.qst.bx_web.pojo.Book">
+        <id column="bookid" property="bookid"></id>
+        <id column="author" property="author"></id>
+        <id column="cid" property="category.cid"></id>
+        <id column="cname" property="category.cname"></id>
+        <id column="cname2" property="category.cname2"></id>
+        <id column="pic1" property="pic1"></id>
+        <id column="pic2" property="pic2"></id>
+        <id column="pic3" property="pic3"></id>
+        <id column="press" property="press"></id>
+        <id column="publishdate" property="publishdate"></id>
+        <id column="title" property="title"></id>
+        <id column="unitprice" property="unitprice"></id>
+    </resultMap>
+
+    <select id="getAllBooks" parameterType="Map" resultMap="bookList">
+        SELECT bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice
+        FROM bx_books bb join bx_category bc on bb.cid=bc.cid where 1=1
+        <if test="cid!=0">
+            AND bb.cid= #{cid}
+        </if>
+        LIMIT ${(pageNo-1)*pageSize},${pageSize}
+    </select>
+
+</mapper>
+

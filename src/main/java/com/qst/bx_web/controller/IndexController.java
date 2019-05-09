@@ -26,4 +26,9 @@ public class IndexController {
     public String retister(Model model) {
         return "/register";
     }
+
+    @RequestMapping("booklist")
+    public String booklist(Model model) {
+        return "/booklist";
+    }
 }

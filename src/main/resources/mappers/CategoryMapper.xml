@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.bx_web.dao.CategoryDao">
+    <resultMap id="categoryList" type="com.qst.bx_web.pojo.Category">
+        <id column="cid" property="cid"></id>
+        <id column="cname" property="cname"></id>
+        <id column="cname2" property="cname2"></id>
+    </resultMap>
+
+    <select id="getAllCategorys" resultMap="categoryList">
+        SELECT *
+        FROM bx_category
+    </select>
+
+</mapper>
+

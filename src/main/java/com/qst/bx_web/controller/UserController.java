@@ -29,8 +29,6 @@ public class UserController {
     @RequestMapping("userInfo")
     public List<User> userInfo() {
         List<User> userList = userService.getAllUser();
-        System.out.println("------------------------------------------");
-        System.out.println(userList.size());
         return userList;
     }
 
