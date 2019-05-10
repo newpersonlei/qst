@@ -52,4 +52,8 @@ public class IndexController {
         return "/basket";
     }
 
+    @RequestMapping("order")
+    public String order(Model model) {
+        return "/order";
+    }
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_base::layout(~{::title},_,~{::#content_div})}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>后台管理</title>
+</head>
+
+<body>
+<div id="content_div">
+    <div id="breadcrumb" class="black">您现在的位置： <a href="#">第三波</a> > <a href="#">管理员后台</a> > <a href="#">图书分类管理</a> > <a
+            href="#">为书籍分类</a></div>
+
+    <form id="form1" name="form1" method="post" action="modifyUser">
+        <table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" class="data_table">
+
+            <thead>
+            <tr>
+                <th width="20%" scope="col">字段</th>
+                <th scope="col">值</th>
+            </tr>
+            </thead>
+            <tbody id="data_body">
+            <tr>
+                <td>用户ID：</td>
+                <td><input type="text" id="userid" name="userid" th:value="${user.userid}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" id="username" name="username" th:value="${user.username}"/></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" id="password" name="password" th:value="${user.password}"/></td>
+            </tr>
+            <tr>
+                <td>年龄：</td>
+                <td><input type="text" id="age" name="age" th:value="${user.age}"/></td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td th:if="${user.sex=='M'}">
+                    <input id="man" type="radio" checked="checked" name="sex" value="M"/>男
+                    <input id="woman" type="radio" name="sex"value="F"/>女
+                </td>
+                <td th:if="${user.sex=='F'}">
+                    <input id="man" type="radio" name="sex"value="M"/>男
+                    <input id="woman" type="radio" checked="checked" name="sex"value="F"/>女
+                </td>
+            </tr>
+            <tr>
+                <td>国家：</td>
+                <td><input type="text" id="country" name="country" th:value="${user.country}"/></td>
+            </tr>
+            <tr>
+                <td>城市：</td>
+                <td><input type="text" id="city" name="city" th:value="${user.city}"/></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="8" class="pages">
+                    <button type="submit">确定修改</button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </form>
+
+    <script type="text/javascript">
+        var s = document.getElementById("data_body").getElementsByTagName("tr");
+        for (var i = 0; i < s.length; i++) s[i].style.background = i % 2 == 0 ? "#DDF5D9" : "#fff";
+    </script>
+</div>
+</body>
+</html>

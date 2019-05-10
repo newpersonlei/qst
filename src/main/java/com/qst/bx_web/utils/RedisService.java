@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-@Service
+@Service("redisService")
 public class RedisService {
     @Autowired
     private RedisTemplate redisTemplate;

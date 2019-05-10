@@ -53,6 +53,28 @@ public class BookController {
         return mv;
     }
 
+    @RequestMapping("admin_booklistInfo")
+    public ModelAndView admin_booklistInfo(User user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        String strCid = request.getParameter("cid");
+        String strPageNo = request.getParameter("pageNo");
+        String strPageSize = request.getParameter("pageSize");
+
+        int cid = ("".equals(strCid) || strCid == null) ? 0 : Integer.parseInt(strCid);
+        int pageNo = ("".equals(strPageNo) || strPageNo == null) ? 1 : Integer.parseInt(strPageNo);
+        int pageSize = ("".equals(strPageSize) || strPageSize == null) ? 10 : Integer.parseInt(strPageSize);
+
+        if (session.getAttribute("categorylist") == null) {
+            List<Category> categoryList = categoryService.getAllCategorys();
+            session.setAttribute("categorylist", categoryList);
+        }
+
+        List<Book> list = bookService.getAllBooks(cid, pageNo, pageSize);
+        session.setAttribute("booklist", list);
+        mv.setViewName("admin/bookmanager");
+        return mv;
+    }
+
     //bookdetailsInfo
     @RequestMapping("bookdetailsInfo")
     public ModelAndView bookdetailsInfo(Model model, User user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -61,19 +83,20 @@ public class BookController {
         int bid = ("".equals(strBid) || strBid == null) ? 0 : Integer.parseInt(strBid);
         Book book = bookService.getBookById(bid);
 
-//        model.addAttribute("author", book.getAuthor());
-//        model.addAttribute("cid", book.getCategory().getCid());
-//        model.addAttribute("bookid", book.getBookid());
-//        model.addAttribute("cname2", book.getCategory().getCname2());
-//        model.addAttribute("title", book.getTitle());
-//        model.addAttribute("publishdate", book.getPublishdate());
-//        model.addAttribute("unitprice", book.getUnitprice());
-//        model.addAttribute("press", book.getPress());
-//        model.addAttribute("pic1", book.getPic1());
-//        model.addAttribute("pic2", book.getPic2());
-//        model.addAttribute("pic3", book.getPic3());
         model.addAttribute("book",book);
         mv.setViewName("bookdetails");
+        return mv;
+    }
+
+    @RequestMapping("admin_bookdetailsInfo")
+    public ModelAndView admin_bookdetailsInfo(Model model, User user, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        String strBid = request.getParameter("bid");
+        int bid = ("".equals(strBid) || strBid == null) ? 0 : Integer.parseInt(strBid);
+        Book book = bookService.getBookById(bid);
+
+        model.addAttribute("book",book);
+        mv.setViewName("admin/bookdetails");
         return mv;
     }
 }

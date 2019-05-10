@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/admin_base::layout(~{::title},_,~{::#content_div})}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>后台管理</title>
+</head>
+
+<body>
+<div id="content_div">
+    <div id="breadcrumb" class="black">您现在的位置： <a href="#">第三波</a> > <a href="#">管理员后台</a> > <a href="#">图书分类管理</a> > <a
+            href="#">为书籍分类</a></div>
+
+    <form id="form1" name="form1" method="post" action="">
+        <table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" class="data_table">
+
+            <thead>
+            <tr>
+                <th width="10%" scope="col">
+
+                    <input type="checkbox" name="checkbox" id="checkbox"/>
+                    全选
+                </th>
+                <th scope="col">ID</th>
+                <th scope="col">用户名</th>
+                <th scope="col">年龄</th>
+                <th scope="col">性别</th>
+                <th scope="col">国家</th>
+                <th scope="col">城市</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="data_body">
+            <tr th:each="user:${userlist}">
+                <td><input type="checkbox" name="checkbox2" id="checkbox2"/></td>
+                <td th:text="${user.userid}"></td>
+                <td class="name" th:text="${user.username}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.sex}"></td>
+                <td th:text="${user.country}"></td>
+                <td th:text="${user.city}"></td>
+                <td><a th:href="@{'userInfo?username='+${user.username}}" >编辑</a></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="8" class="pages">
+                    <a href="#" title="前一页" class="first"><<</a>
+                    <a href="#" title="" class="current">1</a>
+                    <a href="#" title="">2</a>
+                    <a href="#" title="">3</a>
+                    <a href="#" title="">4</a>
+                    <a href="#" title="">5</a>
+                    <a href="javascript:void(0)" class="more">...</a>
+                    <a href="#" title="">106</a>
+                    <a href="#" title="">107</a>
+                    <a href="#" title="">108</a>
+                    <a href="#" title="">109</a>
+                    <a href="#" title="">110</a>
+                    <a href="#" title="后一页" class="end">>></a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </form>
+
+    <script type="text/javascript">
+        var s = document.getElementById("data_body").getElementsByTagName("tr");
+        for (var i = 0; i < s.length; i++) s[i].style.background = i % 2 == 0 ? "#DDF5D9" : "#fff";
+    </script>
+</div>
+</body>
+</html>

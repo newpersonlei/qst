@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <meta name="Robots" content="index,follow"/>
+    <title>"第三波书店"-网上书店</title>
+    <link href="CSS/global.css" rel="stylesheet" type="text/css"/>
+    <link href="CSS/member.css" rel="stylesheet" type="text/css"/>
+</head>
+</head>
+
+<body>
+<div id="top">
+    <div class="status">您好，欢迎来<b th:text="${session.user!=null?session.user.username:''}"></b>到网上书店^_^</div>
+    <div class="member">
+        <div id="nav">
+            <ul id="mainnav">
+                <li class="current"><a href="index">首页</a></li>
+                <li><a href="login">用户登录</a></li>
+                <li><a href="register" style="color: red">免费注册</a></li>
+                <li><a href="basket">购物车</a></li>
+                <li><a href="#">在线客服</a></li>
+                <li><a href="#">积分兑换</a></li>
+                <li><a href="#">书籍求购</a></li>
+                <li><a href="#">帮助</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="container">
+    <h3 class="order_p_title">填写核对订单信息</h3>
+    <div class="order_p_main">
+        <dl>
+            <dt>收货人信息 [<a href="#">修改</a>]</dt>
+            <dd>收货人姓名：Angel<br/>
+                省&#160;&#160;&#160;&#160;份：北京海淀区四环到五环之间<br/>
+                地址：北京市海淀区成府路207号北大青鸟2层<br/>
+                邮编：100871<br/>
+                固定电话：13811150381<br/>
+                手机：13811150381<br/>
+                电子右键：angel@gmail.com
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>发票信息 [<a href="#">修改</a>]</dt>
+            <dd>发票类型：普通发票<br/>
+                发票抬头：个人<br/>
+                发票内容：办公用品
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>订单备注 [<a href="#">修改</a>]</dt>
+            <dd>暂无
+            </dd>
+        </dl>
+
+        <dl class="nopadding">
+            <dt>商品清单 <a href="#">返回修改购物车</a></dt>
+            <dd>
+                <table width="96%" align="center" border="0" cellspacing="0" cellpadding="0" class="order_table">
+                    <thead>
+                    <tr>
+                        <th scope="col">商品名称</th>
+                        <th scope="col" width="10%">商品名称</th>
+                        <th scope="col" width="10%">价格</th>
+                        <th scope="col" width="10%">返现</th>
+                        <th scope="col" width="10%">赠送积分</th>
+                        <th scope="col" width="10%">库存状态</th>
+                        <th scope="col" width="10%">商品数量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="name">web标准：重构DIV+CSS页面</td>
+                        <td>56089</td>
+                        <td>68.00</td>
+                        <td>0.00</td>
+                        <td>20</td>
+                        <td>库存状态</td>
+                        <td>商品数量</td>
+                    </tr>
+                    <tr>
+                        <td class="name">web标准：重构DIV+CSS页面</td>
+                        <td>56089</td>
+                        <td>68.00</td>
+                        <td>0.00</td>
+                        <td>20</td>
+                        <td>库存状态</td>
+                        <td>商品数量</td>
+                    </tr>
+                    <tr>
+                        <td class="name">web标准：重构DIV+CSS页面</td>
+                        <td>56089</td>
+                        <td>68.00</td>
+                        <td>0.00</td>
+                        <td>20</td>
+                        <td>库存状态</td>
+                        <td>商品数量</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </dd>
+        </dl>
+
+        <dl class="nopadding enddl">
+            <dt>结算信息</dt>
+            <dd>
+                <table width="96%" align="center" border="0" cellspacing="0" cellpadding="0" class="count_table">
+                    <thead>
+                    <tr>
+                        <th scope="col" align="left" colspan="2">商品金额 68.00 元 + 运费： 5.00 元 - 优惠券：0.00 元 - 返现：0.00元</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="name ">（+）使用优惠券抵消部分</td>
+                        <td class="order_count" width="20%">应付总额：<span class="red">77.00</span> 元</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </dd>
+        </dl>
+
+        <div class="order_p_btn"><input type="submit" class="order_p_sub" value=""/></div>
+    </div>
+</div>
+
+
+<div id="footer">
+    <!--contac us-->
+    <div class="telephone">
+        <strong>热线</strong> 021-61508168　<strong>传真</strong> 021-61508168-8020　 <br/>
+        <strong>Q Q</strong>375013071  13483528    562655482  1143735195（技术)<br/>
+        <strong>MSN</strong> hjservice@hotmail.com   <strong>信箱</strong> shop@hjenglish.com<br/>
+        <strong>帮助</strong> <a href="/help/help.aspx" target="_blank">银行汇款帐户</a> <a href="/help/help.aspx#help_post"
+                                                                                    target="_blank">邮局汇款地址</a> <a
+            href="/help/help.aspx#help_ship" target="_blank">送货方式及费用</a> <a
+            href="http://www.hjenglish.com/down/faq_2.htm" target="_blank">如何进行下载</a>
+    </div>
+    <!---->
+    <div class="imp_link">
+        <img src="Images/alipay.gif" alt="支付宝支付"/><img src="Images/online_pay.gif" alt="在线支付"/><br/>
+        <a href="http://www.hjenglish.com/about/aboutus.htm" target="_blank">网站介绍</a>　<a
+            href="http://www.hjenglish.com/about/partner.htm" target="_blank">合作伙伴</a>　<a href="#"
+                                                                                          target="_blank">网站地图</a>　<a
+            href="#" target="_blank">联系我们</a><br/>
+        <a href="#" target="_blank">增值电信业务经营许可证沪B2-20040503</a></div>
+</div>
+
+<div id="child_site">
+    <strong>分站</strong>　 <a href="#" target="_blank">沪江网</a>  <a href="#" target="_blank">听说</a>  <a href="#"
+                                                                                                     target="_blank">口译</a> 
+    <a href="#" target="_blank">CET</a>  <a href="#" target="_blank">考研</a>  <a href="#" target="_blank">雅思</a>  <a
+        href="#" target="_blank">托福</a>  <a href="#" target="_blank">日语</a>  <a href="#" target="_blank">法语</a>  <a
+        href="#" target="_blank">下载</a>  <a href="#" target="_blank">文库</a>  <a href="#" target="_blank">部落</a>  <a
+        href="#" target="_blank">博客</a>  <a href="#" target="_blank">词典</a>  <a href="#" target="_blank">IT新闻</a>  <a
+        href="#" target="_blank">博客园</a>  <a title="新世界日语" href="#" target="_blank">新世界日语</a>  <a title="2010考研书籍推荐专题"
+                                                                                                  href="#"
+                                                                                                  target="_blank">2010考研书籍</a>
+</div>
+
+
+</body>
+</html>

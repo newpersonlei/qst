@@ -27,13 +27,62 @@ public class UserController {
     public UserService userService;
 
     @RequestMapping("userInfo")
-    public List<User> userInfo() {
-        List<User> userList = userService.getAllUser();
-        return userList;
+    public ModelAndView userInfo(Model model, User user, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        String username = request.getParameter("username");
+        user = userService.getUserByName(username);
+        model.addAttribute("user", user);
+        mv.setViewName("admin/userdetails");
+        return mv;
     }
 
+    @RequestMapping("modifyUser")
+    public ModelAndView modifyUser(Model model, User user, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        ModelAndView mv = new ModelAndView();
+        int userid = Integer.parseInt(request.getParameter("userid"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        int age = Integer.parseInt(request.getParameter("age"));
+        String city = request.getParameter("city");
+        String country = request.getParameter("country");
+        String sex = request.getParameter("sex");
+        user.setUserid(userid);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setAge(age);
+        user.setCountry(country);
+        user.setCity(city);
+        user.setSex(sex);
+
+        boolean res = userService.modifyUser(user);
+        if (res) {
+            model.addAttribute("user", user);
+        } else {
+            // response.getWriter().write("<script>alert('修改失败，请重试');</script>");
+            model.addAttribute("user", userService.getUserByName(user.getUsername()));
+        }
+        mv.setViewName("admin/userdetails");
+        return mv;
+    }
+
+    @RequestMapping("userlistInfo")
+    public ModelAndView userlistInfo(Model model, User user, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        String strPageNo = request.getParameter("pageNo");
+        String strPageSize = request.getParameter("pageSize");
+
+        int pageNo = ("".equals(strPageNo) || strPageNo == null) ? 1 : Integer.parseInt(strPageNo);
+        int pageSize = ("".equals(strPageSize) || strPageSize == null) ? 10 : Integer.parseInt(strPageSize);
+
+        List<User> userlist = userService.getAllUser(pageNo, pageSize);
+        model.addAttribute("userlist", userlist);
+        mv.setViewName("admin/usermanager");
+        return mv;
+    }
+
+
     @RequestMapping("userLogin")
-    public ModelAndView userLogin(User user, HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException {
+    public ModelAndView userLogin(User user, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         ModelAndView mv = new ModelAndView();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -44,9 +93,9 @@ public class UserController {
         if (user != null) {
             session.setAttribute("user", user);
 
-            Cookie uuid=new Cookie("uuid", "uuid="+UUID.randomUUID());
-            Cookie userId=new Cookie("userId", "userId="+user.getId());
-            Cookie st=new Cookie("st", "st="+ new Date().getTime());
+            Cookie uuid = new Cookie("uuid", "uuid=" + UUID.randomUUID());
+            Cookie userId = new Cookie("userId", "userId=" + user.getUserid());
+            Cookie st = new Cookie("st", "st=" + new Date().getTime());
             response.addCookie(uuid);
             response.addCookie(userId);
             response.addCookie(st);
@@ -64,26 +113,24 @@ public class UserController {
         ModelAndView mv = new ModelAndView();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        Date regTime = df.parse(df.format(new Date()));
-        String role = "user";
-        int status = 0;
-        String regIp = request.getRemoteAddr();
+        int age = Integer.parseInt(request.getParameter("age"));
+        String city = request.getParameter("city");
+        String country = request.getParameter("country");
+        String sex = request.getParameter("sex");
+
         user.setUsername(username);
         user.setPassword(password);
-        user.setEmail(email);
-        user.setRegTime(regTime);
-        user.setRole(role);
-        user.setStatus(status);
-        user.setRegIp(regIp);
+        user.setAge(age);
+        user.setCity(city);
+        user.setCountry(country);
+        user.setSex(sex);
 
         int userId = userService.addUser(user);
-        if(userId>0){
-            model.addAttribute("username",user.getUsername());
+        if (userId > 0) {
+            model.addAttribute("username", user.getUsername());
             mv.setViewName("redirect:login");
-        }else{
-            model.addAttribute("error","注册失败，请重试");
+        } else {
+            model.addAttribute("error", "注册失败，请重试");
             mv.setViewName("register");
         }
         return mv;

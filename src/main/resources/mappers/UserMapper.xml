@@ -2,30 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qst.bx_web.dao.UserDao">
     <resultMap id="userList" type="com.qst.bx_web.pojo.User">
-        <id column="id" property="id"></id>
-        <id column="email" property="email"></id>
+        <id column="userid" property="userid"></id>
+        <id column="age" property="age"></id>
+        <id column="city" property="city"></id>
+        <id column="country" property="country"></id>
         <id column="password" property="password"></id>
+        <id column="sex" property="sex"></id>
         <id column="username" property="username"></id>
-        <id column="role" property="role"></id>
-        <id column="status" property="status"></id>
-        <id column="regTime" property="regTime"></id>
-        <id column="regIp" property="regIp"></id>
     </resultMap>
-    <select id="getAllUser" resultMap="userList">
+
+    <select id="getAllUser" parameterType="Map" resultMap="userList">
         SELECT *
-        FROM user
+        FROM bx_users LIMIT ${(pageNo-1)*pageSize},${pageSize}
     </select>
 
+    <select id="getUserByName" resultType="com.qst.bx_web.pojo.User">
+        SELECT *
+        FROM bx_users
+        where username = #{username} limit 0,1
+    </select>
+
+    <!--普通用户登录-->
     <select id="userLogin" resultType="com.qst.bx_web.pojo.User">
+        SELECT *
+        FROM bx_users
+        where username = #{username}
+          and `password` = #{password} limit 0,1
+    </select>
+
+    <insert id="addUser" parameterType="com.qst.bx_web.pojo.User" useGeneratedKeys="true" keyProperty="userid">
+        insert into bx_users(age, city,country,`password`, sex, username)
+        values (#{age}, #{city},#{country}, #{password}, #{sex}, #{username})
+    </insert>
+
+    <update id="modifyUser" parameterType="com.qst.bx_web.pojo.User">
+        update bx_users
+        <set>
+            <if test="age != null">age=#{age},</if>
+            <if test="city != null">city=#{city},</if>
+            <if test="country != null">country=#{country},</if>
+            <if test="sex != null">sex=#{sex},</if>
+            <if test="username != null">username=#{username},</if>
+            <if test="password != null">`password`=#{password}</if>
+        </set>
+        where userid=#{userid}
+    </update>
+
+    <!--管理员登录-->
+    <select id="adminLogin" resultType="com.qst.bx_web.pojo.AdminUser">
         SELECT *
         FROM user
         where username = #{username}
           and `password` = #{password}
     </select>
-
-    <insert id="addUser" parameterType="com.qst.bx_web.pojo.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user(email, `password`, username, `role`, `status`, regTime, regIp)
-        values (#{email}, #{password}, #{username}, #{role}, #{status}, #{regTime}, #{regIp})
-    </insert>
 </mapper>
 
