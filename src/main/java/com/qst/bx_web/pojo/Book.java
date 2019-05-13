@@ -11,6 +11,33 @@ public class Book {
     private String title;
     private double unitprice;
     private Category category;
+    private String description;
+    private String catalog;
+    private String content;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(String catalog) {
+        this.catalog = catalog;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Category getCategory() {
         return category;

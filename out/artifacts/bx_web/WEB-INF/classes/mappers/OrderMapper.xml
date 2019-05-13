@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.bx_web.dao.OrderDao">
+    <resultMap id="orderList" type="com.qst.bx_web.pojo.Order">
+        <id column="orderid" property="orderid"></id>
+        <id column="orderdate" property="orderdate"></id>
+        <id column="status" property="status"></id>
+        <id column="subtotal" property="subtotal"></id>
+        <id column="userid" property="user.userid"></id>
+        <id column="username" property="user.username"></id>
+    </resultMap>
+
+    <select id="getOrderList" parameterType="Map" resultMap="orderList">
+        SELECT
+        orderid,orderdate,status,subtotal,u.userid,u.username
+        FROM bx_orders o join bx_users u on u.userid=o.userid where 1=1
+        <if test="orderdate!=null">
+            AND o.orderdate= #{orderdate}
+        </if>
+        LIMIT ${(pageNo-1)*pageSize},${pageSize}
+    </select>
+
+    <select id="getOrderById" resultMap="orderList">
+        SELECT
+        orderid,orderdate,status,subtotal,u.userid,u.username
+        FROM bx_orders o join bx_users u on u.userid=o.userid
+        where o.orderid=#{orderid}
+    </select>
+
+    <select id="getOrderItemsByOrderId" resultType="com.qst.bx_web.pojo.OrderItem">
+        select
+        bookid,modifydate,orderid,quantity,score,unitprice
+        from bx_orderitems
+        where orderid=#{orderid}
+    </select>
+
+</mapper>
+

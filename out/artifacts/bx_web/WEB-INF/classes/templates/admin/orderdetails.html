@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_base::layout(~{::head},_,~{::#content_div})}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>订单管理</title>
+    <link href="CSS/admin.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div id="content_div">
+    <div id="breadcrumb" class="black">您现在的位置： <a href="#">第三波</a> > <a href="#">管理员后台</a> > <a href="#">图书分类管理</a> > <a
+            href="#">为书籍分类</a></div>
+
+    <form id="form1" name="form1" method="post" action="">
+        <table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" class="data_table">
+            <tbody>
+            <tr>
+                <td>
+                    <table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" class="data_table">
+                        <thead>
+                        <tr>
+                            <th scope="col">订单ID</th>
+                            <th scope="col">订单日期</th>
+                            <th scope="col">订单状态</th>
+                            <th scope="col">订单总额</th>
+                            <th scope="col">用户名</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${order.orderid}"></td>
+                            <td th:text="${order.orderdate}"></td>
+                            <td th:text="${order.status}"></td>
+                            <td th:text="${order.subtotal}"></td>
+                            <td th:text="${order.user.username}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="96%" border="0" cellspacing="0" cellpadding="0" align="center" class="data_table">
+                        <thead>
+                        <tr>
+                            <th width="10%" scope="col">
+
+                                <input type="checkbox" name="checkbox" id="checkbox"/>
+                                全选
+                            </th>
+                            <th scope="col">图书ID</th>
+                            <th scope="col">修改日期</th>
+                            <th scope="col">订单ID</th>
+                            <th scope="col">商品数量</th>
+                            <th scope="col">商品评分</th>
+                            <th scope="col">商品单价</th>
+                            <th width="30%" scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="data_body">
+                        <tr th:each="orderitem:${order.orderitems}">
+                            <td><input type="checkbox" name="checkbox2" id="checkbox2"/></td>
+                            <td th:text="${orderitem.bookid}"></td>
+                            <td th:text="${orderitem.modifydate}"></td>
+                            <td th:text="${orderitem.orderid}"></td>
+                            <td th:text="${orderitem.quantity}"></td>
+                            <td th:text="${orderitem.score}"></td>
+                            <td th:text="${orderitem.unitprice}"></td>
+                            <td>
+                                <button>修改</button>
+                                <button>删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+
+    <script type="text/javascript">
+        var s = document.getElementById("data_body").getElementsByTagName("tr");
+        for (var i = 0; i < s.length; i++) s[i].style.background = i % 2 == 0 ? "#DDF5D9" : "#fff";
+    </script>
+</div>
+</body>
+</html>

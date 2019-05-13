@@ -1,151 +1,96 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/admin_base::layout(~{::title},_,~{::#content_div})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/admin_base::layout(~{::head},_,~{::#content_div})}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图书详情</title>
+    <link href="CSS/admin.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/ueditor.all.min.js"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+
+        //实例化编辑器
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        var ue = UE.getEditor('editor_description');
+        var ue = UE.getEditor('editor_catalog');
+        var ue = UE.getEditor('editor_content');
+
+    </script>
 </head>
 
 <body>
 <div id="content_div">
-    <div class="book_view">
-        <h1 class="b_title" th:text="${'丛书名：'+book.title}"></h1>
-        <div class="b_exa">
-            <span class="book_status">正在阅读（150 人），已经阅读（4521 人） <span><a href="#">放入书架</a></span> <a href="#">什么是书架？</a></span>
-        </div>
+    <form id="form1" name="form1" method="post" action="modifyBook">
+        <div class="book_view">
+            <input type="hidden" id="bookid" name="bookid" th:value="${book.bookid}"/>
+            <h1 class="b_title">丛书名：<input type="text" id="title" name="title" th:value="${book.title}"/></h1>
+            <!--book basic start-->
+            <dl class="put_book">
+                <dt>
+                    <img th:src="${book.pic2}" th:alt="${book.title}"/>
+                    <div class="chakan"><img src="Images/zoom.gif"/> <a class="gray878787a" href="#" name="bigpicture">点击查看大图</a>
+                    </div>
+                </dt>
+                <dd>
+                    <div id="book_editor">
+                        作　　者： <input type="text" id="author" name="author" th:value="${book.author}"/> 著<br/>
+                        出 版 社： <input type="text" id="press" name="press" th:value="${book.press}"/>
+                    </div>
+                    <ul id="book_attribute">
+                        <li th:text="${'出版时间：'+book.publishdate}"></li>
+                        <li th:text="${'I S B N ：'+book.bookid}"></li>
+                    </ul>
 
-        <!--book basic start-->
-        <dl class="put_book">
-            <dt>
-                <img th:src="${book.pic2}" th:alt="${book.title}" />
-                <div class="chakan"><img src="Images/zoom.gif" /> <a class="gray878787a" href="#" name="bigpicture">点击查看大图</a></div>
-            </dt>
-            <dd>
-                <div id="book_editor">
-                    作　　者： <b th:text="${book.author}"></b> 著<br />
-                    出 版 社： <b th:text="${book.press}"></b>
-                </div>
-                <ul id="book_attribute">
-                    <li th:text="${'出版时间：'+book.publishdate}"></li>
-                    <li>字　　数： </li>
-                    <li>版　　次： 1</li>
-
-                    <li>页　　数： 540</li>
-                    <li>印刷时间： 2009-5-1</li>
-                    <li>开　　本： 16开</li>
-                    <li>印　　次： 1</li>
-                    <li>纸　　张： 胶版纸</li>
-                    <li>I S B N    ： 9787214052339</li>
-
-                    <li>包　　装： 平装</li>
-                </ul>
-
-                <div id="book_categroy">所属分类： <a th:href="@{'booklistInfo?cid='+${book.category.cid}}" target="_blank" class="blue12a" th:text="${book.category.cname2}"></a> </div>
-
-                <div id="book_price">
-                    <span class="gray87">定价：<span class="del">￥60.00</span></span>
-                    <span class="red">当当价：￥<b>35.40</b></span>   折扣：<span class="redc30">59折</span>   节省：￥24.60
-                </div>
-
-                <div id="book_point">
-                    <span >送积分：<span id="pointsTag" >354</span></span>　<a target="_blank" href="#2">积分说明</a> <br />
-                    <a href="#"><img src="Images/btn_goumai.gif" onmouseover="this.src='Images/btn_goumai_click.gif'" onmouseout="this.src='Images/btn_goumai.gif'" /></a>
-                    <a href="#"><img src="Images/btn_zancun.gif" onmouseover="this.src='Images/btn_zancun_click.gif'" onmouseout="this.src='Images/btn_zancun.gif'" /></a>
-                </div>
-
-                <div id="book_count">
-                    顾客评分：<span id="book_id_15">5</span>
-                    共有商品评论0条  <a href="#">查看评论摘要</a>
-                </div>
-            </dd>
-        </dl>
-        <!--book basic end-->
-        <!--book intro start-->
-        <dl class="book_intro">
-            <dt>编辑推荐</dt>
-            <dd>中国健康类图书第一品牌“国医健康绝学系列”2009年重磅新品
-                《求医不如求己家庭医学全书》是一本保佑全家老小平平安安的健康红宝书。里面汇集了将近200种家庭常见疾病的自助调治方案，它们特别简单、特别安全、特别适合家庭使用。严格按照书中的方法去做，每个人身体的绝大多数问题都能得到解决。
-                　　中里巴人先生健康养生绝学使用说明书，一看就懂，最安全、最有效、最省钱。
-                本书几大特色：</dd>
-        </dl>
-
-        <dl class="book_intro">
-            <dt>内容简介</dt>
-            <dd>中国健康类图书第一品牌“国医健康绝学系列”2009年重磅新品
-                《求医不如求己家庭医学全书》是一本保佑全家老小平平安安的健康红宝书。里面汇集了将近200种家庭常见疾病的自助调治方案，它们特别简单、特别安全、特别适合家庭使用。严格按照书中的方法去做，每个人身体的绝大多数问题都能得到解决。
-                　　中里巴人先生健康养生绝学使用说明书，一看就懂，最安全、最有效、最省钱。
-                本书几大特色：</dd>
-        </dl>
-
-        <dl class="book_intro">
-            <dt>目录</dt>
-            <dd>中国健康类图书第一品牌“国医健康绝学系列”2009年重磅新品
-                《求医不如求己家庭医学全书》是一本保佑全家老小平平安安的健康红宝书。里面汇集了将近200种家庭常见疾病的自助调治方案，它们特别简单、特别安全、特别适合家庭使用。严格按照书中的方法去做，每个人身体的绝大多数问题都能得到解决。
-                　　中里巴人先生健康养生绝学使用说明书，一看就懂，最安全、最有效、最省钱。
-                本书几大特色：</dd>
-        </dl>
-
-        <dl class="book_intro">
-            <dt>书籍插图</dt>
-            <dd>中国健康类图书第一品牌“国医健康绝学系列”2009年重磅新品
-                《求医不如求己家庭医学全书》是一本保佑全家老小平平安安的健康红宝书。里面汇集了将近200种家庭常见疾病的自助调治方案，它们特别简单、特别安全、特别适合家庭使用。严格按照书中的方法去做，每个人身体的绝大多数问题都能得到解决。
-                　　中里巴人先生健康养生绝学使用说明书，一看就懂，最安全、最有效、最省钱。
-                本书几大特色：</dd>
-        </dl>
-        <!--book intro end-->
-
-        <!--recommed start-->
-        <div class="comm_answer">
-            <!--review head start-->
-            <div id="div_product_reviews">
-                <div class="total_comm">
-                    <div class="comm_title">
-                        <h2>商品评论 共<em>814</em>条
-                            <span class="look_comm"> (<a href="#" name='reviewList'  target='_blank'>查看所有评论</a>)</span></h2>
+                    <div id="book_categroy">所属分类：
+                        <select name="cid" id="cid">
+                            <option th:each="cl:${session.categorylist}" th:value="${cl.cid}" th:text="${cl.cname2}"
+                                    th:selected="${cl.cname2==book.category.cname2}"></option>
+                        </select>
                     </div>
 
-                    <div class="total_body">
-                        <div class="people_average">
-                            <div class="average_left"><p>购买过的顾客平均评分</p><span class="a_red28b pd">4</span><span class="red_bold">星半</span><img src='Images/star_red.gif' /><img src='Images/star_red.gif' /><img src='Images/star_red.gif' /><img src='Images/star_red.gif' /><img src='Images/star_redgray_big.gif' />
-                            </div>
-                            <span class="span_jt" id="div_window_star"><input class="button_down1" value=""  type="button" /></span>
-                        </div>
-
-                        <div id="div_product_summary" >
-
-                            <div class="people_heart">心情指数:<em>249</em>人 开心
-                                <span id="div_emotion_hover"  >
-                                    <input class="button_down1"   type="button" />
-                                </span>
-                            </div>
-                            <div id="Div1" class="people_read" >阅读场所:<em>180</em>人 床上
-                                <span id="div_location_hover"  >
-                                    <input class="button_down1"   type="button" />
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="write_comm">
-                            <a id="reviewTipa"  href="#"><img src="Images/button_write_comm.gif" border="0" title="写评论" /></a>
-                        </div>
+                    <div id="book_price">
+                        <span class="gray87">定 价：<input type="text" id="unitprice" name="unitprice"
+                                                        th:value="${book.unitprice}"/></span>
                     </div>
-                </div>
-            </div>
-            <!--review head end-->
 
-            <!--the one reviews start-->
-            <div class="comm_list">
-                <h3>
-                    <img src="Images/label_1.gif"  title="精彩评论" /><a href="#" target="_blank" name="reviewDetail">非常不错的一本书</a>
-                    <span>发表于 2009-04-29 22:46</span>
-                </h3>
+                </dd>
+            </dl>
+            <!--book basic end-->
+            <!--book intro start-->
+            <dl class="book_intro">
+                <dt>内容简介</dt>
+                <dd>
+                    <script id="editor_description" name="description" type="text/plain" style="height:300px;" th:utext="${book.description}"></script>
+                </dd>
+            </dl>
 
-                哦耶，终于拿到书了。&nbsp;<br/>实物比照片显示的要漂亮，颜色是看上去很舒服的红色。&nbsp;<br/>书很厚，是塑封的，里面有两张挂图，一张标准穴位图，一张足部反射区图，还有一张配套的光盘，用DVD机试了一下，是中里老师讲的。嗯，
-            </div>
-            <!--the one reviews end-->
+            <dl class="book_intro">
+                <dt>目录</dt>
+                <dd>
+                    <script id="editor_catalog" name="catalog" type="text/plain" style="height:300px;" th:utext="${book.catalog}"></script>
+                </dd>
+            </dl>
+
+            <dl class="book_intro">
+                <dt>书籍插图</dt>
+                <dd>
+                    <script id="editor_content" name="content" type="text/plain" style="height:300px;" th:utext="${book.content}"></script>
+                </dd>
+            </dl>
+
+            <dl>
+                <button type="submit" style="width: 200px;height: 80px;">确定修改</button>
+            </dl>
+            <dl>
+
+            </dl>
+            <!--book intro end-->
         </div>
-        <!--recommed end-->
-    </div>
-    <!--right content end-->
+        <!--right content end-->
+    </form>
 </div>
 </body>
 </html>

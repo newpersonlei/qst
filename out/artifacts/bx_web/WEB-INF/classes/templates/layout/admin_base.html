@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml"
-      th:fragment="layout(title,left,content)">
-<head>
+      th:fragment="layout(head,left,content)">
+<head th:replace="${head}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title th:replace="${title}">无</title>
+    <title >无</title>
     <link href="CSS/admin.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -15,7 +15,7 @@
     <div id="opt_list" th:replace="${left}">
         <h1>管理员，您好！</h1>
         <ul>
-            <li><a href="#">订单管理</a></li>
+            <li><a href="orderlistInfo">订单管理</a></li>
             <li><a href="userlistInfo">用户管理</a></li>
             <li><a href="#">角色管理</a></li>
             <li><a href="#">图书分类管理</a></li>

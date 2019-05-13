@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -83,7 +84,7 @@ public class BookController {
         int bid = ("".equals(strBid) || strBid == null) ? 0 : Integer.parseInt(strBid);
         Book book = bookService.getBookById(bid);
 
-        model.addAttribute("book",book);
+        model.addAttribute("book", book);
         mv.setViewName("bookdetails");
         return mv;
     }
@@ -95,7 +96,38 @@ public class BookController {
         int bid = ("".equals(strBid) || strBid == null) ? 0 : Integer.parseInt(strBid);
         Book book = bookService.getBookById(bid);
 
-        model.addAttribute("book",book);
+        model.addAttribute("book", book);
+        mv.setViewName("admin/bookdetails");
+        return mv;
+    }
+
+    @RequestMapping("modifyBook")
+    public ModelAndView modifyBook(Model model, Book book, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        ModelAndView mv = new ModelAndView();
+
+        book.setAuthor(request.getParameter("author"));
+        book.setBookid(Integer.parseInt(request.getParameter("bookid")));
+        book.setCatalog(request.getParameter("catalog"));
+        Category category = new Category();
+        category.setCid(Integer.parseInt(request.getParameter("cid")));
+        book.setCategory(category);
+        book.setContent(request.getParameter("content"));
+        book.setDescription(request.getParameter("description"));
+        book.setPic1(request.getParameter("pic1"));
+        book.setPic2(request.getParameter("pic2"));
+        book.setPic3(request.getParameter("pic3"));
+        book.setPress(request.getParameter("press"));
+        book.setPublishdate(request.getParameter("publishdate"));
+        book.setTitle(request.getParameter("title"));
+        book.setUnitprice(Double.parseDouble(request.getParameter("unitprice")));
+
+        boolean res = bookService.modifyBook(book);
+        if (res) {
+            model.addAttribute("book", book);
+        } else {
+            // response.getWriter().write("<script>alert('修改失败，请重试');</script>");
+            model.addAttribute("book", bookService.getBookById(book.getBookid()));
+        }
         mv.setViewName("admin/bookdetails");
         return mv;
     }

@@ -30,4 +30,10 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookById(bid);
         return book;
     }
+
+    @Override
+    public boolean modifyBook(Book book) {
+        int res = bookDao.modifyBook(book);
+        return res > 0 ? true : false;
+    }
 }

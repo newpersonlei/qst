@@ -9,4 +9,5 @@ public interface BookService {
 
     Book getBookById(int bid);
 
+    boolean modifyBook(Book book);
 }

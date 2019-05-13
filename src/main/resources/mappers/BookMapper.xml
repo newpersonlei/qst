@@ -14,10 +14,14 @@
         <id column="publishdate" property="publishdate"></id>
         <id column="title" property="title"></id>
         <id column="unitprice" property="unitprice"></id>
+        <id column="description" property="description"></id>
+        <id column="catalog" property="catalog"></id>
+        <id column="content" property="content"></id>
     </resultMap>
 
     <select id="getAllBooks" parameterType="Map" resultMap="bookList">
-        SELECT bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice
+        SELECT
+        bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice,description,`catalog`,content
         FROM bx_books bb join bx_category bc on bb.cid=bc.cid where 1=1
         <if test="cid!=0">
             AND bb.cid= #{cid}
@@ -26,10 +30,30 @@
     </select>
 
     <select id="getBookById" resultMap="bookList">
-        SELECT bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice
+        SELECT bookid,author,bb.cid,bc.cname,bc.cname2,pic1,pic2,pic3,press,publishdate,title,unitprice,description,`catalog`,content
         FROM bx_books bb join bx_category bc on bb.cid=bc.cid
         where bookid = #{bid}
     </select>
+
+    <update id="modifyBook" parameterType="com.qst.bx_web.pojo.Book">
+        update bx_books
+        <set>
+            <if test="author != null">author=#{author},</if>
+            <if test="catalog != null">`catalog`=#{catalog},</if>
+            <if test="category.cid != null">cid=#{category.cid},</if>
+            <if test="category.cname != null">cname=#{category.cname},</if>
+            <if test="content != null">content=#{content},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="pic1 != null">pic1=#{pic1},</if>
+            <if test="pic2 != null">pic2=#{pic2},</if>
+            <if test="pic3 != null">pic3=#{pic3},</if>
+            <if test="press != null">press=#{press},</if>
+            <if test="publishdate != null">publishdate=#{publishdate},</if>
+            <if test="title != null">title=#{title},</if>
+            <if test="unitprice != null">`unitprice`=#{unitprice}</if>
+        </set>
+        where bookid=#{bookid}
+    </update>
 
 </mapper>
 

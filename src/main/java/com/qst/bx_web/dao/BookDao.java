@@ -11,4 +11,6 @@ public interface BookDao {
     List<Book> getAllBooks(Map<String,Integer> map);
 
     Book getBookById(int bid);
+
+    int modifyBook(Book book);
 }
