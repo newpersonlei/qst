@@ -32,9 +32,10 @@
                         <tr>
                             <td th:text="${order.orderid}"></td>
                             <td th:text="${order.orderdate}"></td>
-                            <td th:text="${order.status}"></td>
+                            <td><input type="text" id="text_orderstatus" style="width: 60px;" name="text_orderstatus" th:value="${order.status}"/></td>
                             <td th:text="${order.subtotal}"></td>
                             <td th:text="${order.user.username}"></td>
+                            <td><button>修改订单状态</button></td>
                         </tr>
                         </tbody>
                     </table>
